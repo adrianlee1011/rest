@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('example').innerHTML = `<b>Example usage:</b> <p>${example}</p>`;
             }
             else {
-                document.querySelector('#result').innerHTML = 'Error: No such word found.';
+                document.querySelector('#queryWord').innerHTML = 'Error: No such word found.';
             }
         }
 

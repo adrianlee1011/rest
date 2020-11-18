@@ -31,6 +31,9 @@ def coder():
         return jsonify({"success": False})
  
     data = res.json()
+    
+    writeRes = requests.get(f"http://127.0.0.1:5002/{text}/{data['international']}/{data['gerke']}/{data['morse']}")
+
     return jsonify({"success": True, "code": data})
 
 
