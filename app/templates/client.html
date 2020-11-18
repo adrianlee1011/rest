@@ -13,52 +13,46 @@
         <nav class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="client.html">Distributed Systems Coursework 2</a>
+                    <a class="navbar-brand" href="/">Distributed Systems Coursework 2</a>
                 </div>
             </div>
         </nav>
         <div class="container">
-                    <h1>
-                        Dictionary
-                    </h1>
-                    <h5>
-                        Enter a word and get its pronunciation and meanings from Oxfor Dictionary api.
-                    </h5>
-            <form class="form-inline">
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Enter a word" id="dictionary-search">
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
-            <br/>
+            <h1>
+                Alphabets to Morse Code Translator
+            </h1>
+            <h5>
+                Enter a string and get the translated Morse Code
+            </h5>
             <form class="form-inline" id="formCoder">
                 <input class="form-control" id="txtInput" placeholder="Text" type="text">
                 <input class="btn btn-primary" type="submit" value="Translate">
             </form>
             <div id="result">
             </div>
+            <br>
+            <h1>
+                Dictionary
+            </h1>
+            <h5>
+                Enter a word and get its pronunciation and meanings from Oxford Dictionary api.
+            </h5>
+            <form class="form-inline" id="dictField">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Enter a word" id="dictionary-search">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Search">
+            </form>
+            
         </div>
         <!-- {{ quote }} -->
-
+        <!-- {{ dict }} -->
         <div class="container">
-            <h2>
-                Pronunciation
-            </h2>
-            <h4>
-                <a href="{{ dict.results[0].lexicalEntries[0].entries[0].pronunciations[0].audioFile }}">{{ dict.results[0].lexicalEntries[0].entries[0].pronunciations[0].audioFile }}</a>
-            </h4>
-            <h2>
-                Meanings of the word
-            </h2>
-            <ul>
-                {% for meaning in dict.results[0].lexicalEntries[0].entries[0].senses %}
-                    <li>
-                        <h4>
-                            {{ meaning.definitions[0] }}
-                        </h4>
-                    </li>
-                {% endfor %}
-            </ul>
+            <h2 id="queryWord"></h2>
+            <h4 id="pronunciation"></h4>
+            <h4 id="meaning"></h4>
+            <h4 id="example"></h4>
+            
         </div>
     </body>
 </html>

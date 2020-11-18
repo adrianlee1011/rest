@@ -26,7 +26,7 @@ class DataSaver(Resource):
         international += parts[1] + '<br/>'
         gerke += parts[2] + '<br/>'
         morse += parts[3][:-1] + '<br/>'
-    return json.loads('{"text":"' + text + '", "internatinoal":"' + international + '", "gerke":"' + gerke + '", "morse":"' + morse + '"}')
+    return json.loads('{"text":"' + text + '", "international":"' + international + '", "gerke":"' + gerke + '", "morse":"' + morse + '"}')
 
 # Setup the Api resource routing
 api.add_resource(DataSaver, '/<text>/<international>/<gerke>/<morse>')
