@@ -19,7 +19,7 @@ def index():
 
     return render_template("client.html")
 
-
+'''
 @app.route("/coder", methods=['POST'])
 def coder():
     # Query for text to translate to morse code
@@ -35,20 +35,40 @@ def coder():
     writeRes = requests.get(f"http://127.0.0.1:5002/{text}/{data['international']}/{data['gerke']}/{data['morse']}")
 
     return jsonify({"success": True, "code": data})
-
+'''
 
 @app.route("/dictionary", methods=['POST'])
 def dictionary():
     # Query for text to translate to morse code
     word = request.form.get("word")
     url = "https://od-api.oxforddictionaries.com:443/api/v2/entries/en-gb/" + word.lower()
-    res = requests.get(url, headers={'app_id' : app_id, 'app_key' : app_key})
+    res1 = requests.get(url, headers={'app_id' : app_id, 'app_key' : app_key})
 
     # Make sure request succeeded
-    if res.status_code != 200:
+    if res1.status_code != 200:
+        return jsonify({"success": False})
+
+    wordData = res1.json()
+
+    definition = wordData['results'][0]['lexicalEntries'][0]['entries'][0]['senses'][0]['definitions'][0]
+
+    # Query for text to translate to morse code
+    res2 = requests.get("http://127.0.0.1:5001/" + definition)
+ 
+    # Make sure request succeeded
+    if res2.status_code != 200:
         return jsonify({"success": False})
  
-    data = res.json()
-    return jsonify({"success": True, "word": data})
+    coderData = res2.json()
+
+    res3 = requests.get(f"http://127.0.0.1:5002/{definition}/{coderData['international']}/{coderData['gerke']}/{coderData['morse']}")
+
+    # Make sure request succeeded
+    if res3.status_code != 200:
+        return jsonify({"success": False})
+ 
+    saverData = res3.json()
+ 
+    return jsonify({"success": True, "word": wordData, "code": coderData, "saver": saverData})
 
     

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-
+/*
     document.querySelector('#formCoder').onsubmit = () => {
 
         // Initialize new request
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         request.send(data);
         return false;
     };
-
+*/
     document.querySelector('#dictField').onsubmit = () => {
 
         // Initialize new request
@@ -48,17 +48,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 // add searched word into title
                 document.querySelector('#queryWord').innerHTML = `Word: ${data.word.id}`;
 
-                // add link to pronunciation
-                const url = data.word.results[0].lexicalEntries[0].entries[0].pronunciations[0].audioFile;
-                document.querySelector('#pronunciation').innerHTML = `<b>Pronunciaition</b>: <a href="${url}">Link</a>`;
+                try {
+                    // add link to pronunciation
+                    const url = data.word.results[0].lexicalEntries[0].entries[0].pronunciations[0].audioFile;
+                    document.querySelector('#pronunciation').innerHTML = `<b>Pronunciation</b>: <a href="${url}">Link</a>`;
+                }
+                catch {
+                    document.querySelector('#pronunciation').innerHTML = `No pronunciation found.`;
+                }
 
-                // add meaning of word
-                const meaning = data.word.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0];
-                document.getElementById('meaning').innerHTML = `<b>Definition:</b> <p>${meaning}</p>`;
+                try {
+                    // add meaning of word
+                    const meaning = data.word.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0];
+                    document.getElementById('meaning').innerHTML = `<b>Definition:</b> <p>${meaning}</p>`;
+                }
+                catch {
+                    document.getElementById('meaning').innerHTML = `No definition found.`;
+                }
 
-                // example usage
-                const example = data.word.results[0].lexicalEntries[0].entries[0].senses[0].examples[0].text;
-                document.getElementById('example').innerHTML = `<b>Example usage:</b> <p>${example}</p>`;
+                try {
+                    // example usage
+                    const example = data.word.results[0].lexicalEntries[0].entries[0].senses[0].examples[0].text;
+                    document.getElementById('example').innerHTML = `<b>Example usage:</b> <p>${example}</p>`;
+                }
+                catch {
+                    document.getElementById('example').innerHTML = `No example found.`;
+                }
+
+                // Saver stuff
+                var contents2 = ""
+                for(var i = 0; i < data.saver.text.length; i++) {
+                    contents2 += `Text: ${data.saver.text[i]}<br/>International: ${data.saver.international[i]}<br/>Gerke: ${data.saver.gerke[i]}<br/>Morse: ${data.saver.morse[i]}<br/><br/>`
+                }
+                document.querySelector('#saverResult').innerHTML = contents2;
             }
             else {
                 document.querySelector('#queryWord').innerHTML = 'Error: No such word found.';

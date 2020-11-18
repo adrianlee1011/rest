@@ -11,22 +11,23 @@ class DataSaver(Resource):
   def get(self, text, international, gerke, morse):
     # Write a new record into data.txt file
     file = open("data.txt", 'a')
-    file.write(text + '|' + international + '|' + gerke + '|' + morse + '\n')
+    file.write(text + '$' + international + '$' + gerke + '$' + morse + '\n')
     file.close
     # Initialise string variables to be returned
-    text = ""
-    international = ""
-    gerke = ""
-    morse = ""
+    textArray = []
+    internationalArray = []
+    gerkeArray = []
+    morseArray = []
     # Get all records from data.txt file
     with open("data.txt") as file:
       for line in file:
-        parts = line.split('|')
-        text += parts[0] + '<br/>'
-        international += parts[1] + '<br/>'
-        gerke += parts[2] + '<br/>'
-        morse += parts[3][:-1] + '<br/>'
-    return json.loads('{"text":"' + text + '", "international":"' + international + '", "gerke":"' + gerke + '", "morse":"' + morse + '"}')
+        parts = line.split('$')
+        textArray.append(parts[0])
+        internationalArray.append(parts[1])
+        gerkeArray.append(parts[2])
+        morseArray.append(parts[3][:-1])
+        print(textArray)
+    return json.loads('{"text":' + json.dumps(textArray) + ', "international":' + json.dumps(internationalArray) + ', "gerke":' + json.dumps(gerkeArray) + ', "morse":' + json.dumps(morseArray) + '}')
 
 # Setup the Api resource routing
 api.add_resource(DataSaver, '/<text>/<international>/<gerke>/<morse>')
